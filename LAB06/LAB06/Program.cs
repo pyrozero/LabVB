@@ -1,41 +1,70 @@
 ﻿using System;
 namespace Lab06
 {
-    class Program
+    class Teacher
     {
+        // constructor (for initial private/protected variables)
+        public Teacher(string name, float billingRate)
+        {
+            this.name = name;
+            this.billingRate = billingRate;
+        }
+        // figure out the charge based on teacher's rate
+        public float CalculateCharge(float hours)
+        {
+            return (hours * billingRate);
+        }
+        // return the name of this type
+        public string TypeName()
+        {
+            return ("Teacher");
+        }
+        private string name;
+        protected float billingRate;
+
         static void Main(string[] args)
         {
-            TraineeStudent ts = new TraineeStudent("58030207", 500);
-            try
-            {
-                Console.WriteLine("StudentID : " + ts.StudentID);
-                Console.WriteLine("Salary by day : " + (ts.Salary >= 300 &
-                ts.Salary <= 450 ? Convert.ToString(ts.Salary) : "Error! invalid Salary"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            Console.ReadKey();
+            Teacher teacher = new Teacher("Tom", 350f);
+            Professor prof = new Professor("Jerry", 500f, 5000f);
+            // teacher work 20Hr/month
+            Console.WriteLine("{0} charge = {1}", teacher.TypeName(),
+                teacher.CalculateCharge(20f));
+            // professor work 12Hr/month
+            Console.WriteLine("{0} charge = {1}", prof.TypeName(),
+                prof.CalculateCharge(12F));
+            Console.ReadLine();
         }
+
+
     }
-    class TraineeStudent
+
+    class Professor : Teacher
     {
-        private string getStudentID;
-        private float getSalary;
-        public TraineeStudent(string StudentID, float Salary)
+        private float emolument;  // เงินประจำตำแหน่ง
+
+        public Professor(string name, float billingRate) : base(name, billingRate)
         {
-            
-            this.getStudentID = StudentID;
-            this.getSalary = Salary;
         }
-        public string StudentID
+
+        public Professor(string name, float billingRate, float emolument)
+        : this(name, billingRate)
         {
-            get { return getStudentID; }
+            this.emolument = emolument;
         }
-        public float Salary
+
+        // new function, because it's different than the base version
+        public new float CalculateCharge(float hours)
         {
-            get { return getSalary; }
+            if (hours < 1.0F)
+                hours = 1.0F; // minimum charge.
+            return (hours * billingRate) + emolument;
+        }
+        // new function, because it's different than the base version
+        public new string TypeName()
+        {
+            return ("Professor");
         }
     }
+
+
 }

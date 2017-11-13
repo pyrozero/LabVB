@@ -1,56 +1,41 @@
 ﻿using System;
-
-namespace ConsoleApp5
+namespace Lab06
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Student su = new Student();
+            TraineeStudent ts = new TraineeStudent("58030207", 500);
             try
             {
-                su.Name = "Student Name";
-                su.ID = "12345678";
-                su.GPA = 3.5f;
-                Console.WriteLine("Student name : " + su.Name);
-                Console.WriteLine("Student ID   : " + su.ID);
-                Console.WriteLine("Student GPA  : " + su.GPA);
+                Console.WriteLine("StudentID : " + ts.StudentID);
+                Console.WriteLine("Salary by day : " + (ts.Salary >= 300 &
+                ts.Salary <= 450 ? Convert.ToString(ts.Salary) : "Error! invalid Salary"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
-    class Student
+    class TraineeStudent
     {
-        private string name;
-        private string id;
-        private float gpa;
-        public string Name
+        private string getStudentID;
+        private float getSalary;
+        public TraineeStudent(string StudentID, float Salary)
         {
-            get { return name; }
-            set { name = value; }
+            
+            this.getStudentID = StudentID;
+            this.getSalary = Salary;
         }
-        public string ID
+        public string StudentID
         {
-            get { return id; }
-            set { id = value; }
+            get { return getStudentID; }
         }
-        public float GPA
+        public float Salary
         {
-            get
-            {
-                return gpa;
-            }
-            set
-            {
-                if (value > 0.0 && value <= 4.0)
-                    gpa = value;
-                else
-                    throw (new Exception("Error!!!! invalid GPA"));
-            }
+            get { return getSalary; }
         }
     }
 }

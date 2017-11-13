@@ -1,70 +1,43 @@
 ﻿using System;
 namespace Lab06
 {
-    class Teacher
+    class Program
     {
-        // constructor (for initial private/protected variables)
-        public Teacher(string name, float billingRate)
-        {
-            this.name = name;
-            this.billingRate = billingRate;
-        }
-        // figure out the charge based on teacher's rate
-        public float CalculateCharge(float hours)
-        {
-            return (hours * billingRate);
-        }
-        // return the name of this type
-        public string TypeName()
-        {
-            return ("Teacher");
-        }
-        private string name;
-        protected float billingRate;
-
         static void Main(string[] args)
         {
-            Teacher teacher = new Teacher("Tom", 350f);
-            Professor prof = new Professor("Jerry", 500f, 5000f);
-            // teacher work 20Hr/month
-            Console.WriteLine("{0} charge = {1}", teacher.TypeName(),
-                teacher.CalculateCharge(20f));
-            // professor work 12Hr/month
-            Console.WriteLine("{0} charge = {1}", prof.TypeName(),
-                prof.CalculateCharge(12F));
-            Console.ReadLine();
+            Vector v1 = new Vector(1, 4);
+            Vector v2 = new Vector(8, 5);
+            Vector v3 = v1 + v2;
+            Console.WriteLine("vector v1 = " + v1);
+            Console.WriteLine("vector v2 = " + v2);
+            Console.WriteLine("vector v3 = " + v3);
+            Console.WriteLine("-v3 = " + (-v3));
+            Console.ReadKey();
         }
-
-
     }
-
-    class Professor : Teacher
+    class Vector
     {
-        private float emolument;  // เงินประจำตำแหน่ง
-
-        public Professor(string name, float billingRate) : base(name, billingRate)
+        public Vector(int x, int y)
         {
+            this.X = x;
+            this.Y = y;
         }
+        public int X { get; set; }  // X - accessor (property)
+        public int Y { get; set; }  // Y - accessor (property)
 
-        public Professor(string name, float billingRate, float emolument)
-        : this(name, billingRate)
+        public override string ToString()
         {
-            this.emolument = emolument;
+            return string.Format("({0},{1})", X, Y);
         }
-
-        // new function, because it's different than the base version
-        public new float CalculateCharge(float hours)
+        // All operator overloads must be public and static.
+        public static Vector operator +(Vector v1, Vector v2) //binary operator +
         {
-            if (hours < 1.0F)
-                hours = 1.0F; // minimum charge.
-            return (hours * billingRate) + emolument;
+            return new Vector(v1.X + v2.X, v1.Y + v2.Y);
         }
-        // new function, because it's different than the base version
-        public new string TypeName()
+        public static Vector operator -(Vector v1)  //unary operator -
         {
-            return ("Professor");
+            return new Vector(-v1.X, -v1.Y);
         }
     }
-
 
 }
